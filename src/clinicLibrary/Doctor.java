@@ -1,0 +1,49 @@
+package clinicLibrary;
+
+/**
+ *
+ * @author kevin
+ */
+
+import java.util.ArrayList;
+
+public class Doctor extends User {
+    
+    protected ArrayList <Patient> patients = new ArrayList<>();
+    protected String doctorCode;
+
+    // Empty Constructor
+    public Doctor() {
+        super();
+    }
+
+    // Constructor
+    public Doctor(String pdoctorCode, String pid, String pemail, String ppassword, String pname, String psecondname, String psurname, String psecondSurname, String paddress, int prol) {
+        super(pid, pemail, ppassword, pname, psecondname, psurname, psecondSurname, paddress, prol);
+        this.doctorCode = pdoctorCode;
+    }
+
+    // Gets
+    public String getDoctorCode() {
+        return doctorCode;
+    }
+    public ArrayList<Patient> getPatientDiagnosis() {
+        return patients;
+    }
+    
+
+    // Sets
+    public void setDoctorCode(String doctorCode) {
+        this.doctorCode = doctorCode;
+    }
+    public void setPatients(ArrayList<Patient> patients) {
+        this.patients = patients;
+    }
+
+    // To String
+    @Override
+    public String toString() {
+        return "Doctor{" + "patients=" + patients + ", doctorCode=" + doctorCode + '}';
+    }
+
+}
