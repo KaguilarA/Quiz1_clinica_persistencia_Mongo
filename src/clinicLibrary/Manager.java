@@ -17,12 +17,19 @@ public class Manager {
     private static ArrayList <Diagnosis> allDiagnosis = new ArrayList<>();
     private static ArrayList <User> allUser = new ArrayList<>();
     
+    // Database Variales
+    protected static MongoClientURI uri  = new MongoClientURI("mongodb://admin:teamweb@ds243055.mlab.com:43055/db_clinic");
+    
+    /**
+     * Get Mongo data 
+     * @param args
+     * @throws Exception 
+     */
     public static void main(String[] args) throws Exception
     {
         try
         { 
             // Credentials to MongoDB (Mlab)
-            MongoClientURI uri  = new MongoClientURI("mongodb://admin:teamweb@ds243055.mlab.com:43055/db_clinic");
             MongoClient client = new MongoClient(uri);
             DB db = client.getDB(uri.getDatabase());
             
@@ -95,10 +102,69 @@ public class Manager {
 
         }catch(Exception e)
         {
-            out.println(e);
+            out.println(e.getMessage());
         }
         out.println("Server is ready");
     } 
+    
+    // Gets lists of data
+    
+    /**
+     * Function to get clinics in system
+     * @return List of clinics
+     */
+    public static String [] getClinicList()
+    {
+        int size = allClinics.size();
+        String [] clinics = new String[size];
+        int i = 0;
+        
+        for (Clinic tempClinic:allClinics)
+        {
+            clinics[i] = tempClinic.toString();
+            i++;
+        }
+        
+        return clinics;
+    }
+    
+    /**
+     * Function to get user list in system
+     * @return List of users
+     */
+    public static String [] getUserList()
+    {
+        int size = allUser.size();
+        String [] users = new String[size];
+        int i = 0;
+        
+        for (User tempUser:allUser)
+        {
+            users[i] = tempUser.toString();
+            i++;
+        }
+       
+        return users;
+    }
+    
+    /**
+     * Function to get diagnosis list in system
+     * @return List of diagnosis
+     */
+    public static String [] getDiagnosisList()
+    {
+        int size = allDiagnosis.size();
+        String [] diagnosis = new String[size];
+        int i = 0;
+        
+        for (Diagnosis tempDiagnosis:allDiagnosis)
+        {
+            diagnosis[i] = tempDiagnosis.toString();
+            i++;
+        }
+       
+        return diagnosis;
+    }
     
     /**
      * Function to register a new Clinic
@@ -124,24 +190,5 @@ public class Manager {
         }
         
         return validation;
-    }
-    
-    /**
-     * Function to get clinics in system
-     * @return List of clinics
-     */
-    public static String [] getClinicList()
-    {
-        int size = allClinics.size();
-        String [] clinics = new String[size];
-        int i = 0;
-        
-        for (Clinic tempClinic:allClinics)
-        {
-            clinics[i] = tempClinic.toString();
-            i++;
-        }
-        
-        return clinics;
     }
 }
