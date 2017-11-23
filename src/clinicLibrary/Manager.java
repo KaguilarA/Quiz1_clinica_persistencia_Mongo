@@ -7,7 +7,10 @@ package clinicLibrary;
 
 import java.io.*;
 import com.mongodb.*;
+import com.google.gson.*;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Manager {
     
@@ -18,8 +21,8 @@ public class Manager {
     private static ArrayList <User> allUser = new ArrayList<>();
     
     // Database Variales
-    protected static MongoClientURI uri  = new MongoClientURI("mongodb://admin:teamweb@ds243055.mlab.com:43055/db_clinic");
-    
+    protected static MongoClientURI uri  = 
+            new MongoClientURI("mongodb://admin:teamweb@ds243055.mlab.com:43055/db_clinic");
     /**
      * Get Mongo data 
      * @param args
@@ -40,62 +43,24 @@ public class Manager {
             
             // Find all clinics and put into an arraylist
             DBCursor fclinic = clinics.find();
-            while (fclinic.hasNext())
-            {
-                DBObject list = fclinic.next();
-                out.println("Yo soy la lista de clinicas " + list);
-                // Agregan al arraylist todos los datos de mongo
-                BasicDBObject clinicObj = (BasicDBObject) list;
-                String clinicName = clinicObj.getString("name");
-                String clinicId = clinicObj.getString("id");
-                String clinicAddress = clinicObj.getString("address");
-                int clinicPhone = Integer.parseInt(clinicObj.getString("phone"));
-                Clinic mongoClinic = new Clinic(clinicId,clinicName, clinicAddress, clinicPhone);
-                allClinics.add(mongoClinic);
-            }
             
-            // Cursor de Usuarios
-            DBCursor fuser = users.find();
-            while (fuser.hasNext()) {
-                DBObject list = fuser.next();
-                out.println("Yo soy la lista de usuarios " + list);
-                BasicDBObject userObj = (BasicDBObject) list;
-                String userId = userObj.getString("id");
-                String userName = userObj.getString("name");
-                String userSecondName = userObj.getString("secondname");
-                String userSurname = userObj.getString("surname");
-                String userSeconSurname = userObj.getString("secondSurname");
-                String userAddress = userObj.getString("address");
-                String userEmail = userObj.getString("email");
-                String userPassword = userObj.getString("password");
-                int userRol = Integer.parseInt(userObj.getString("rol"));
-                
-                if (userRol == 1) 
+            try{
+                while (fclinic.hasNext())
                 {
-                    String doctorCode = userObj.getString("doctorCode");
-                    Doctor mongoDoctor = new Doctor(doctorCode, userId, userEmail, userPassword, userName, userSecondName, userSurname, userSeconSurname, userAddress, userRol);
-                    allUser.add(mongoDoctor);
+                    DBObject list = fclinic.next();
+                    out.println("Yo soy la lista de clinicas " + list);
+                    
+                    // Agregan al arraylist todos los datos de mongo
+                    BasicDBObject clinicObj = (BasicDBObject) list;
+                    String clinicName = clinicObj.getString("name");
+                    String clinicId = clinicObj.getString("id");
+                    String clinicAddress = clinicObj.getString("address");
+                    int clinicPhone = Integer.parseInt(clinicObj.getString("phone"));
+                    Clinic mongoClinic = new Clinic(clinicId,clinicName, clinicAddress, clinicPhone);
+                    allClinics.add(mongoClinic);
                 }
-                else 
-                {
-                    String patientBloodType = userObj.getString("booldtype");
-                    Patient mongoPatient = new Patient (patientBloodType, userId, userEmail, userPassword, userName, userSecondName, userSurname, userSeconSurname, userAddress, userRol);
-                    allUser.add(mongoPatient);
-                }
-            }
-            
-            // Find all diagnosis and put into an arraylist
-            DBCursor fdiagnosis = diagnosis.find();
-            while (fdiagnosis.hasNext()) 
-            {
-                DBObject list = fdiagnosis.next();
-                out.println("Yo soy la lista de diagnosticos " + list);
-                BasicDBObject diagnosisObj = (BasicDBObject) list;
-                String diagnosisName = diagnosisObj.getString("name");
-                String diagnosisId = diagnosisObj.getString("id");
-                String diagnosisDescription = diagnosisObj.getString("description");
-                Diagnosis mongoDiagnosis = new Diagnosis (diagnosisId, diagnosisName, diagnosisDescription);
-                allDiagnosis.add(mongoDiagnosis);
+            } finally {
+                fclinic.close();
             }
             
             out.println("MongoDB Conected");
@@ -104,7 +69,9 @@ public class Manager {
         {
             out.println(e.getMessage());
         }
+        
         out.println("Server is ready");
+
     } 
     
     // Gets lists of data
@@ -115,6 +82,7 @@ public class Manager {
      */
     public static String [] getClinicList()
     {
+        
         int size = allClinics.size();
         String [] clinics = new String[size];
         int i = 0;
@@ -129,44 +97,6 @@ public class Manager {
     }
     
     /**
-     * Function to get user list in system
-     * @return List of users
-     */
-    public static String [] getUserList()
-    {
-        int size = allUser.size();
-        String [] users = new String[size];
-        int i = 0;
-        
-        for (User tempUser:allUser)
-        {
-            users[i] = tempUser.toString();
-            i++;
-        }
-       
-        return users;
-    }
-    
-    /**
-     * Function to get diagnosis list in system
-     * @return List of diagnosis
-     */
-    public static String [] getDiagnosisList()
-    {
-        int size = allDiagnosis.size();
-        String [] diagnosis = new String[size];
-        int i = 0;
-        
-        for (Diagnosis tempDiagnosis:allDiagnosis)
-        {
-            diagnosis[i] = tempDiagnosis.toString();
-            i++;
-        }
-       
-        return diagnosis;
-    }
-    
-    /**
      * Function to register a new Clinic
      * @param pid
      * @param pname
@@ -174,20 +104,48 @@ public class Manager {
      * @param pphone
      * @return validation
      */
-    public static boolean registerClinic (String pid, String pname, String paddress, int pphone)
+    public static boolean registerClinic (String pid, String pname, 
+            String paddress, int pphone) throws UnknownHostException
     {
         boolean validation;
         
-        Clinic newClinic = new Clinic(pid, pname, paddress, pphone);
+        String id, name, address;
+        int phone;
         
-        if (newClinic != null)
-        {
-            allClinics.add(newClinic);
+        id = "005";
+        name= "Hospital de prueba";
+        address = "Limon";
+        
+        phone = 12345678;
+        
+        Clinic newClinic = new Clinic(id, name, address, phone);
+        
+        try {
+           
+            // Creamos un objeto de tipo GSON
+            Gson clinicGSON = new Gson();
+
+            // Convertimos el objeto clinica en un JSON por medio de GSON
+            String clinicJSON = clinicGSON.toJson(newClinic); 
+
+            // Convertimos el JSON  un Obeto de Mongo BD (BSON)
+            BasicDBObject basicDBObject = new BasicDBObject("Clinic", clinicJSON);
+
+            // Abrimos la conexion con MongoDB y le enviamos el nuevo objeto
+            MongoClient client = new MongoClient(uri);
+            DB db = client.getDB(uri.getDatabase());
+            DBCollection colleccionClinicas = db.getCollection("Clinics");
+            colleccionClinicas.save(basicDBObject);
+
             validation = true;
-        } else 
+     
+        } catch(Exception e)
         {
+            out.println(e.getMessage());
+            
             validation = false;
         }
+        
         
         return validation;
     }
