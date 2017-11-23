@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Conections;
 
 /**
  *
  * @author kevin
  */
+
+import clinicLibrary.Clinic;
+
 public class conectionClinic {
     
+    public static void saveClinic(Clinic pClinic){}
 }
