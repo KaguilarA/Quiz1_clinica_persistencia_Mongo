@@ -1,7 +1,5 @@
 package Conections;
 
-import clinicLibrary.Diagnosis;
-
 /**
  *
  * @author kevin
