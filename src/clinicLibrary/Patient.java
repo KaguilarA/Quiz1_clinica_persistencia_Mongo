@@ -6,11 +6,11 @@ package clinicLibrary;
  */
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Patient extends User{
     protected ArrayList <Diagnosis> patientDiagnosis = new ArrayList<>();
-    protected ArrayList <Date> appoinment = new ArrayList<>();
+    protected ArrayList <Appointment> appointmentsList = new ArrayList<>();
     protected String bloodType;
 
     // Empty Constructor
@@ -27,8 +27,8 @@ public class Patient extends User{
     public ArrayList<Diagnosis> getPatientDiagnosis() {
         return patientDiagnosis;
     }
-    public ArrayList<Date> getAppoinment() {
-        return appoinment;
+    public ArrayList<Appointment> getAppoinment() {
+        return appointmentsList;
     }
     public String getBloodType() {
         return bloodType;
@@ -38,8 +38,9 @@ public class Patient extends User{
     public void setPatientDiagnosis(ArrayList<Diagnosis> patientDiagnosis) {
         this.patientDiagnosis = patientDiagnosis;
     }
-    public void setAppoinment(ArrayList<Date> appoinment) {
-        this.appoinment = appoinment;
+
+    public void setAppoinment(ArrayList<Appointment> appoinment) {
+        this.appointmentsList = appoinment;
     }
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
@@ -48,7 +49,7 @@ public class Patient extends User{
     // To String
     @Override
     public String toString() {
-        return "Patient{" + "patientDiagnosis=" + patientDiagnosis + ", appoinment=" + appoinment + ", bloodType=" + bloodType + '}';
+        return "Patient{" + "patientDiagnosis=" + patientDiagnosis + ", appoinment=" + appointmentsList + ", bloodType=" + bloodType + '}';
     }
     
 }
