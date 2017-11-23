@@ -1,4 +1,4 @@
-package Managers;
+package Conections;
 
 /**
  *
@@ -7,6 +7,6 @@ package Managers;
 
 import clinicLibrary.Appointment;
 
-public class managerAppointment {
+public class conectionAppointment {
     
 }
