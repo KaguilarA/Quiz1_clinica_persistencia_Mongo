@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Doctor extends User {
     
     protected ArrayList <Patient> patients = new ArrayList<>();
+    protected ArrayList <Appointment> appointmentsList = new ArrayList<>();
     protected String doctorCode;
 
     // Empty Constructor
@@ -30,8 +31,11 @@ public class Doctor extends User {
     public ArrayList<Patient> getPatientDiagnosis() {
         return patients;
     }
-    
 
+    public ArrayList<Appointment> getAppointmentsList() {
+        return appointmentsList;
+    }
+    
     // Sets
     public void setDoctorCode(String doctorCode) {
         this.doctorCode = doctorCode;
@@ -40,6 +44,10 @@ public class Doctor extends User {
         this.patients = patients;
     }
 
+    public void setAppointmentsList(ArrayList<Appointment> appointmentsList) {
+        this.appointmentsList = appointmentsList;
+    }
+    
     // To String
     @Override
     public String toString() {
