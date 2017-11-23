@@ -6,6 +6,7 @@ package Conections;
  */
 
 import clinicLibrary.Appointment;
+import java.util.ArrayList;
 
 public class conectionAppointment {
     

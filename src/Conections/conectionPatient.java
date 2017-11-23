@@ -6,6 +6,7 @@
 package Conections;
 
 import clinicLibrary.Patient;
+import java.util.ArrayList;
 
 /**
  *
