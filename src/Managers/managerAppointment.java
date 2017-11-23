@@ -4,6 +4,6 @@ package Managers;
  *
  * @author kevin
  */
-public class managerAppoiment {
+public class managerAppointment {
     
 }
