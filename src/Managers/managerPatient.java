@@ -15,7 +15,7 @@ public class managerPatient {
         Patient newPatient = new Patient(pbloodType, pid, pemail, ppassword, pname, psecondname, psurname, psecondSurname, paddress, prol);
         
         try{
-            conectionPatient.savePatient(newPatient);
+            conectionPatient.savePatientOnDB(newPatient);
             validation = true;
         }catch(Exception e){
             validation = false;

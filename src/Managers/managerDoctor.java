@@ -15,7 +15,7 @@ public class managerDoctor {
         Doctor newDoctor = new Doctor(pdoctorCode, pid, pemail, ppassword, pname, psecondname, psurname, psecondSurname, paddress, prol);
         
         try{
-            conectionDoctor.saveDoctor(newDoctor);
+            conectionDoctor.saveDoctorOnDB(newDoctor);
             validation = true;
         }catch(Exception e){
             validation = false;
