@@ -6,9 +6,9 @@ package Managers;
  */
 
 import java.io.*;
+import java.util.ArrayList;
 import clinicLibrary.Clinic;
 import Conections.conectionClinic;
-import java.util.ArrayList;
 
 public class managerClinic {
     

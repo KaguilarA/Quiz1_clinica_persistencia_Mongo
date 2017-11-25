@@ -1,5 +1,7 @@
 package Managers;
 
+import java.io.*;
+import java.util.ArrayList;
 import Conections.conectionDiagnosis;
 import clinicLibrary.Diagnosis;
 
@@ -9,19 +11,49 @@ import clinicLibrary.Diagnosis;
  */
 public class managerDiagnosis {
     
-    public static boolean registerPatient (String id, String name, String description)
+    static PrintStream out = System.out;
+    // EL ARREGLO HAY QUE CAMBIARLE EL TIPO A DIAGNOSIS
+    static ArrayList <String> allDiagnosis = new ArrayList<>();
+    
+    public static boolean registerDiagnosis (String pid, String pname, String pdescription)
     {
         boolean validation;
         
-        Diagnosis newDiagnosis = new Diagnosis(id, name, description);
+        Diagnosis newDiagnosis = new Diagnosis(pid, pname, pdescription);
         
         try{
-            conectionDiagnosis.saveDiagnosis(newDiagnosis);
+            conectionDiagnosis.registerNewCDiagnosisOnDB(newDiagnosis);
             validation = true;
         }catch(Exception e){
             validation = false;
+            out.println("Error de gestion" + e);
         }
         
+        return validation;
+    }
+    
+    public static void getDiagnosis ()
+    {
+        try{
+            allDiagnosis = conectionDiagnosis.getAllDiagnosisFromDB();
+        }catch(Exception e){
+            out.println("Error de gestion" + e);
+        }
+    }
+    
+     public static boolean modifyDiagnosis (String pid, String pname, String pdescription)
+    {
+        boolean validation;
+        
+        Diagnosis newDiagnosis = new Diagnosis(pid, pname, pdescription);
+        
+        try{
+            conectionDiagnosis.modifyDiagnosis(newDiagnosis);
+            validation = true;
+        }catch(Exception e){
+            validation = false;
+            out.println("Error de gestion" + e);
+        }
         
         return validation;
     }
